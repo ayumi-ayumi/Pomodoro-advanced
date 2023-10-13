@@ -5,6 +5,17 @@ import alarm from '/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodo
 
 
 export default function MyTimer (props) {
+
+  let expiryTimestamp = props.expiryTimestamp
+  let m = expiryTimestamp / 60;
+  let s = expiryTimestamp % 60;
+  let minutes = Math.floor(m)
+  let seconds = ("0" + s).slice(-2) 
+  // console.log(m)
+  // let seconds = expiryTimestamp % 60
+
+  // // let minutes = ("0" + m).slice(-2) 
+// // let seconds = ("0" + s).slice(-2) 
 // let timerMins = document.getElementById('setTimerMins')
 // let startButton = document.getElementById('startButton')
 // let stopButton = document.getElementById('stopButton')
@@ -148,16 +159,16 @@ export default function MyTimer (props) {
 return (
   <div style={{textAlign: 'center'}}>
     <div style={{fontSize: '100px'}}>
-      <span>{props.minutes}</span>:<span>{props.seconds}</span>
+      <span>{minutes}</span>:<span>{seconds}</span>
       <br />
-      <span>{props.expiryTimestamp}</span>
-      {/* <span>{displayMinutes}</span>:<span>{displaySeconds}</span> */}
       <br />
     </div>
     <div className="buttons">
       <button onClick={props.start}>START</button>
       <button onClick={props.stop}>STOP</button>
       <button onClick={props.reset}>RESET</button>
+      {/* <button onClick={props.stopAudio}>audio stop</button> */}
+      {/* <button onClick={props.playAudio}>audio play</button> */}
       </div>
     </div>
   )
