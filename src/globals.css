@@ -12,3 +12,13 @@
 .react-calendar .react-calendar__month-view__days__day--neighboringMonth {
   color: #757575 !important;
 }
+
+.react-calendar {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.react-calendar__tile {
+  /* background-color: salmon; */
+  height: 50px;
+}
