@@ -4,158 +4,54 @@ import Calendar from 'react-calendar'
 import MyTimer from './components/MyTimer'
 // import 'react-calendar/dist/Calendar.css'
 import alarm from '/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/alarm.mp3'
-import useInterval from 'use-interval'
+import * as React from "react";
+import { render } from "react-dom";
 
-function App() {
-  // const time = new Date();
-  // time.setSeconds(time.getSeconds() + 4); 
+export default function App() {
+    const [value, setValue] = useState()
+    const [isActive, setIsActive] = useState(false);
+    const [expiryTimestamp, setExpiryTimestamp] = useState(3);
+    const audio = new Audio(alarm);
+    let intervalRef = useRef(null);
 
-  const [value, setValue] = useState()
-  const [expiryTimestamp, setExpiryTimestamp ] = useState(3)
+    useEffect(() => {
+      if(isActive){
+        intervalRef.current = setInterval(() => {
+          setExpiryTimestamp((expiryTimestamp) =>{ 
+          if(expiryTimestamp === 0) {
+            audio.play()
+            clearInterval(intervalRef.current);
+            return 0
+        }
+          return expiryTimestamp - 1}
+          )}, 1000);
+      }
+      return () => {
+        clearInterval(intervalRef.current);
+      };
+    });
 
-  let intervalRef = useRef();
+    function stop() {
+      clearInterval(intervalRef.current);
+      setIsActive(prev => !prev);
+      audio.pause()
+    }
 
-  // let count = 0;
+    function start() {
+      setIsActive(prev => !prev);
+    }
 
-  const audio = new Audio(alarm);
+    function reset() {
+      setExpiryTimestamp(3)
+    }
+    return (
 
-function countDown() {
-
-  // setExpiryTimestamp(prev => {
-  //   if(prev === 0) {
-  //     console.log("this is 0")
-  //     // playAudio();
-  //     // audio.play()
-  //     // stop()
-  //     // clearInterval(intervalRef.current);
-  //     return 0
-  //   }  
-  //   intervalRef.current = setInterval(()=>{
-  //           return prev - 1
-  //   }, 1000);
-  // })
-
-
-  // useEffect(() => {
-  //   let n = expiryTimestamp;
-  //   intervalRef.current = setInterval(()=>{
-  //           n--;
-  //           setExpiryTimestamp(n)
-  //           // setExpiryTimestamp(prev => {
-  //           //   if(prev === 0) {
-  //           //     playAudio();
-  //           //     // audio.play()
-  //           //     // stop()
-  //           //     // clearInterval(intervalRef.current);
-  //           //     return 0
-  //           //   } 
-  //           //     n--;
-  //           //     return n
-  //           // })
-  //       }, 1000);
-   
-  // });
-  intervalRef.current = setInterval(()=>{
-          setExpiryTimestamp(prev => {
-            if(prev === 0) {
-              // playAudio();
-              audio.play()
-              stop()
-              // clearInterval(intervalRef.current);
-              return 0
-            } 
-              return prev - 1
-          })
-      }, 1000);
-  // intervalRef.current = setInterval(()=>{
-  //         setExpiryTimestamp(prev => {
-  //           if(prev === 0) {
-  //             playAudio();
-  //             // audio.play()
-  //             // stop()
-  //             // clearInterval(intervalRef.current);
-  //             return 0
-  //           } 
-  //             return prev - 1
-  //         })
-  //     }, 1000);
-
-}
-
-// function start(
-//   countDown()
-// )
-// timerID = setInterval(() => countDown(), 1000);
-// useEffect(function(){
-//   timerID = setInterval(countDown, 1000);
-
-// }) 
-// timerID = setInterval(countDown,1000);
-
-// console.log(123)
-// setInterval(() => countDown(), 1000);
-// setInterval(countDown(), 1000);
-// timerID = countDown()
-
-// function start() {
-// // timerID = setInterval(() => countDown(), 1000);
-// // useEffect(function(){
-// //   timerID = setInterval(countDown, 1000);
-
-// // }) 
-// // timerID = setInterval(countDown,1000);
-
-// // console.log(123)
-// countDown()
-// // setInterval(() => countDown(), 1000);
-// // setInterval(countDown(), 1000);
-// // timerID = countDown()
-// }
-
-// function playAudio(){
-//   audio.play();
-// }
-  
-function stopAudio(){
-  audio.volume = 0;
-  audio.currentTime = 0;
-  audio.src=""
-  audio.load()
-  audio.remove()
-  audio.pause();
-  clearInterval(intervalRef.current);
-  // console.log("stopAudio button")
-  // console.log(audio.src)
-}
-
-function stop () {
-  // clearInterval(timerID);
-  // stopAudio();
-  // audio.pause();
-  // console.log("stop button")
-
-  clearInterval(intervalRef.current);
-  // intervalRef.current=null
-// timerID = null;
-}
-
-function reset() {
-  // expiryTimestamp = props.expiryTimestamp;
-  setExpiryTimestamp(3)
-// minutes = expiryTimestamp / 60
-// seconds = expiryTimestamp % 60
-// showTimer.innerHTML = ("0" + minutes).slice(-2) +"：" + ("0" + seconds).slice(-2);
-}
-
-return (
-    <>
+      <>
       <MyTimer 
       expiryTimestamp={expiryTimestamp} 
-      start={countDown}
+      start={start}
       stop={stop}
       reset={reset}
-      // stopAudio={stopAudio}
-      // playAudio={playAudio}
       />
       <Calendar 
       value={value}
@@ -164,7 +60,17 @@ return (
         />
       {/* <div>{value}</div> */}
     </>
-  )
-}
 
-export default App
+
+);
+}
+{/* <div>
+  expiryTimestamp: {expiryTimestamp}
+  <br />
+  <button onClick={start}> Start </button>
+  <button onClick={stop}> Stop </button>
+  <button onClick={reset}> Reset </button>
+  <button onClick={()=>{
+    setIsActive(true);
+  }}> Start </button>
+</div>  */}
