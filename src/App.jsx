@@ -56,6 +56,8 @@ export default function App() {
     setExpiryTimestamp(3);
   }
 
+  
+
   return (
     <>
       <MyTimer
@@ -68,9 +70,11 @@ export default function App() {
       <Calendar
         onChange={(date) => setDate(date)}
         value={date}
-        tileContent={({ date, view }) => (
-          <div className="custom-date-style">{count}</div>
-        )}
+        // showWeekNumbers={true}
+        // tileContent={({ date, view }) => (
+        //   <div className="custom-date-style">{count}</div>
+        // )}
+        tileContent={({ activeStartDate, date, view }) => view === 'month' && date.getDate() ===  new Date().getDate()? <p>It's Sunday!</p> : null}
       />
       {/* <div>{value}</div> */}
     </>
