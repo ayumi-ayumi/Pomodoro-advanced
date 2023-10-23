@@ -18,6 +18,10 @@ return (
       <span>{minutes}</span>:<span>{seconds}</span>
     </div>
     <div>count: {props.count}</div>
+    {/* <div>{props.record}</div> */}
+    {props.record.map((item)=>(
+        <div key={item.id}>{item.date}: {item.count}</div>
+    ))}
     <div className="buttons">
       <button onClick={props.start}>START</button>
       <button onClick={props.stop}>STOP</button>
