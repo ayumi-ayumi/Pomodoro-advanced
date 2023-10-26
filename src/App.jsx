@@ -52,7 +52,6 @@ export default function App() {
   
   useEffect(() => {
     if (expiryTimestamp === 0) {
-
       add()
     }
   }, [count]);
@@ -77,9 +76,8 @@ export default function App() {
     const newRecordArr = [...recordArr, newRecord];
     if(count > 0) setRecordArr(newRecordArr)
     localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecordArr));
-    console.log(recordArr)
-  }
-  
+}
+
   useEffect(() => {
     const CountDataOnLocalStorage = JSON.parse(localStorage.getItem(todayDdMmYyyy))
     if (CountDataOnLocalStorage) {
@@ -175,9 +173,15 @@ export default function App() {
         // tileContent={({ activeStartDate, date, view }) => view === 'month' && date.getDate() ===  new Date().getDate()? <p>Today</p> : null}
         // tileContent = {getTileContent}
         tileContent={({ activeStartDate, date, view }) => 
-        view === 'month' && date.getDate() ===  new Date().getDate() 
+        view === 'month' 
+        && 
+        date.getFullYear() ===  new Date().getFullYear() 
+        &&
+        date.getMonth() ===  new Date().getMonth() 
+        &&
+        date.getDate() ===  new Date().getDate() 
         ? 
-        <p>It's today!</p> 
+        <p>あゆみ</p> 
         : 
         null
         }
