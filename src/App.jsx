@@ -85,6 +85,23 @@ export default function App() {
     }
   },[]);
 
+  // const aa = JSON.parse(localStorage.getItem(24102023))
+  // console.log(aa)
+
+  // Object.keys(localStorage).forEach(function(key) { console.log(key); });
+
+  let object = {};
+
+  for(let i = 0 ; i < localStorage.length ; i++) {
+
+    let key = localStorage.key(i);
+    object[key] = localStorage.getItem(key);
+
+}
+
+console.log(object)
+  
+
 //   var obj = {
 //     last : "tarou",
 //     first : "yamada"
@@ -181,7 +198,7 @@ export default function App() {
         &&
         date.getDate() ===  new Date().getDate() 
         ? 
-        <p>あゆみ</p> 
+        <p>{count}</p> 
         : 
         null
         }

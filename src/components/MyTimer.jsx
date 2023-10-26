@@ -13,6 +13,7 @@ export default function MyTimer (props) {
   let seconds = ("0" + s).slice(-2) 
 
   const lastElement = props.record.slice(-1)
+  console.log(props.record)
 
 return (
   <div style={{textAlign: 'center'}}>
