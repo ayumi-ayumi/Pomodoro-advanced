@@ -12,12 +12,24 @@ export default function MyTimer (props) {
   let minutes = Math.floor(m)
   let seconds = ("0" + s).slice(-2) 
 
+  // const [timerMins, setTimerMins] = useState()
+
   // const lastElement = props.record.slice(-1)
+
+  // function handleChange (event) {
+  //   console.log(event.target.value)
+  //   setTimerMins(prev => event.target.value)
+  // }
+  console.log(props.expiryTimestamp)
 
 return (
   <div style={{textAlign: 'center'}}>
+    <div>
+      <input type='number' max={60} step={5} onChange={props.handleChange} />Minutes
+    </div>
     <div style={{fontSize: '100px'}}>
-      <span>{minutes}</span>:<span>{seconds}</span>
+      <span>{props.expiryTimestamp && minutes}</span>:<span>{props.expiryTimestamp && seconds}</span>
+      {/* <span>{minutes}</span>:<span>{seconds}</span> */}
     </div>
     {props.record && <div>count: {props.record.count}</div>}
     {props.record && <div>{props.record.recordDate}</div>}
