@@ -1,0 +1,28 @@
+.timeLeft {
+  font-size: 70px;
+  height: 100px;
+  line-height: 100px;
+}
+
+.settingTimer {
+  /* font-size: 60px; */
+  line-height: 60px;
+}
+
+
+input {
+  height: 60px;
+  width: 100px;
+  border-radius: 10px;
+  margin: 5px;
+  font-size: 50px;
+  text-align: center;
+}
+
+
+
+button abbr {
+  display: inline-block;
+}
+
+
