@@ -9,13 +9,16 @@ import * as React from "react";
 
 export default function App() {
   // const [value, setValue] = useState()
-  // const [date, setDate] = useState(new Date(2023, 9, 15));
+  // const [date, setDate] = useState(new Date(2023, 8, 10)); //demo
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
-  const [expiryTimestamp, setExpiryTimestamp] = useState();
+  const [expiryTimestamp, setExpiryTimestamp] = useState(0);
+  // const [expiryTimestamp, setExpiryTimestamp] = useState();
   // const [timeLeft, setTimeLeft] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(expiryTimestamp * 60);
-  const [count, setCount] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(1);
+  // const [timeLeft, setTimeLeft] = useState(expiryTimestamp);
+  // const [timeLeft, setTimeLeft] = useState(expiryTimestamp * 60);
+  // const [count, setCount] = useState(0);
   const [record, setRecord] = useState();
   const [collections, setCollections] = useState();
   // const [totalSecondsArr, setTotalSecondsArr] = useState([]);
@@ -28,10 +31,35 @@ export default function App() {
   let intervalRef = useRef(null);
 
   useEffect(() => {
-    if (record) {
-      if (record.count) setCount(record.count);
+    const totalSecondsDataOnLocalStorage = JSON.parse(
+      localStorage.getItem(todayDdMmYyyy)
+    );
+    if (totalSecondsDataOnLocalStorage) {
+      setRecord(totalSecondsDataOnLocalStorage);
+      // setCount(countDataOnLocalStorage.count);
     }
-  }, [isActive]);
+  }, []);
+ 
+  useEffect(() => {
+    if (record) {
+      if (record.totalSeconds) setTotalSeconds(record.totalSeconds);
+    }
+  }, [record]);
+  // useEffect(() => {
+  //   const countDataOnLocalStorage = JSON.parse(
+  //     localStorage.getItem(todayDdMmYyyy)
+  //   );
+  //   if (countDataOnLocalStorage) {
+  //     setRecord(countDataOnLocalStorage);
+  //     // setCount(countDataOnLocalStorage.count);
+  //   }
+  // }, []);
+ 
+  // useEffect(() => {
+  //   if (record) {
+  //     if (record.count) setCount(record.count);
+  //   }
+  // }, [record]);
 
   useEffect(() => {
     if (isActive) {
@@ -51,59 +79,67 @@ export default function App() {
     };
   });
 
+  // When time is up, add set expiry time stamp to the total seconds
   useEffect(() => {
     if (timeLeft === 0) {
-      setCount((prev) => prev + 1);
-      // setTotalSeconds((prev) => prev + expiryTimestamp);
-
+    // add();
+    setTotalSeconds((prev) => prev + expiryTimestamp);
     }
   }, [timeLeft]);
-  // useEffect(() => {
-  //   if (timeLeft === 0)
-  //   setCount((prev) => prev + 1);
-  // }, [timeLeft]);
+  // }, [count]);
 
   useEffect(() => {
     if (timeLeft === 0) {
-      add();
-      setTotalSeconds((prev) => prev + expiryTimestamp);
+    add();
     }
-  }, [count]);
-
-  useEffect(() => {
-    const countDataOnLocalStorage = JSON.parse(
-      localStorage.getItem(todayDdMmYyyy)
-    );
-    if (countDataOnLocalStorage) {
-      setRecord(countDataOnLocalStorage);
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if (timeLeft > 0) setTotalSecondsArr(prev => prev + timeLeft)
-  // }, [timeLeft])
+  }, [totalSeconds]);
+  // }, [count]);
+  // }, [timeLeft]);
 
   //Store in the local storage
   function add() {
+    console.log(totalSeconds)
     const newRecord = {
-      id: Math.floor(Math.random() * 1000),
+      id: todayDdMmYyyy,
       recordDate: todayDdMmYyyy,
-      count: count,
+      totalSeconds: totalSeconds,
     };
-    // const newRecordArr = [...record, newRecord];
-    if (count > 0) setRecord(newRecord);
-    localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
+    if (totalSeconds > 0) setRecord(newRecord);
+      localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
+    
   }
+  // //Store in the local storage
+  // function add() {
+  //   const newRecord = {
+  //     id: todayDdMmYyyy,
+  //     recordDate: todayDdMmYyyy,
+  //     count: count,
+  //   };
+  //   if (count > 0) setRecord(newRecord);
+  //     localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
+    
+  // }
 
-  //make object of each date and count number {date: count number}
+  //Make an object of each date and count number {date: count number}
   useEffect(() => {
     let collection = {};
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
-      collection[key] = JSON.parse(localStorage.getItem(key)).count;
+      collection[key] = JSON.parse(localStorage.getItem(key)).totalSeconds;
     }
     setCollections(collection);
-  }, [count]);
+  }, [totalSeconds]);
+  // }, [count]);
+  // //Make an object of each date and count number {date: count number}
+  // useEffect(() => {
+  //   let collection = {};
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     let key = localStorage.key(i);
+  //     collection[key] = JSON.parse(localStorage.getItem(key)).count;
+  //   }
+  //   setCollections(collection);
+  // }, [totalSeconds]);
+  // // }, [count]);
 
   function stop() {
     clearInterval(intervalRef.current);
@@ -112,7 +148,7 @@ export default function App() {
   }
 
   function start() {
-    setIsActive(true);
+    if(expiryTimestamp) setIsActive(true);
     // setTotalSecondsArr([...totalSecondsArr, expiryTimestamp])
   }
 
@@ -124,17 +160,15 @@ export default function App() {
   }
 
   function getFormatDate(date) {
-    return `${("0" + date.getDate()).slice(-2)}${(
-      "0" +
-      (date.getMonth() + 1)
-    ).slice(-2)}${date.getFullYear()}`;
+    return `${(date.getDate())}${(date.getMonth() + 1)}${date.getFullYear()}`;
   }
 
   function handleChange(event) {
-    setExpiryTimestamp((prev) => parseInt(event.target.value));
+    setExpiryTimestamp(event.target.value * 60);
+    // setExpiryTimestamp((prev) => parseInt(event.target.value));
     // setTimeLeft(expiryTimestamp * 60);
-    setTimeLeft((prev) => event.target.value * 60);
-    // setTimeLeft(prev => event.target.value * 60);
+    setTimeLeft((prev) => event.target.value); // as seconds
+    // setTimeLeft((prev) => event.target.value * 60); //本番用
     // setTotalSecondsArr([...event.target.value])
   }
 
@@ -142,7 +176,6 @@ export default function App() {
     <>
       <MyTimer
         timeLeft={timeLeft}
-        count={count}
         start={start}
         stop={stop}
         reset={reset}

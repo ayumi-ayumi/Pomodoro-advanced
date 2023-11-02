@@ -34,7 +34,6 @@ export default function MyTimer(props) {
        {props.timeLeft ? <span>{minutes}</span> : <span>00</span>}:
        {props.timeLeft ? <span>{seconds}</span> : <span>00</span>}
       </div>
-      {props.record && <div>count: {props.record.count}</div>}
       {props.totalSeconds &&<div>{props.totalSeconds}</div> }
       {<div>{props.isActive ? "active": "no active"}</div>}
       {/* {lastElement.map((el)=>(
