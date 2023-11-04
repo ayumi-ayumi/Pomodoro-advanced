@@ -14,8 +14,6 @@ export default function App() {
   const [isActive, setIsActive] = useState(false);
   const [expiryTimestamp, setExpiryTimestamp] = useState(0);
   const [timeLeft, setTimeLeft] = useState();
-  // const [timeLeft, setTimeLeft] = useState(1);
-  // const [count, setCount] = useState(0);
   const [record, setRecord] = useState();
   const [collections, setCollections] = useState();
   const [totalSeconds, setTotalSeconds] = useState(0);
@@ -35,7 +33,6 @@ export default function App() {
     );
     if (totalSecondsDataOnLocalStorage) {
       setRecord(totalSecondsDataOnLocalStorage);
-      // setCount(countDataOnLocalStorage.count);
     }
   }, []);
 
@@ -44,21 +41,6 @@ export default function App() {
       if (record.totalSeconds) setTotalSeconds(record.totalSeconds);
     }
   }, [record]);
-  // useEffect(() => {
-  //   const countDataOnLocalStorage = JSON.parse(
-  //     localStorage.getItem(todayDdMmYyyy)
-  //   );
-  //   if (countDataOnLocalStorage) {
-  //     setRecord(countDataOnLocalStorage);
-  //     // setCount(countDataOnLocalStorage.count);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (record) {
-  //     if (record.count) setCount(record.count);
-  //   }
-  // }, [record]);
 
   useEffect(() => {
     if (isActive) {
@@ -81,21 +63,15 @@ export default function App() {
   // When time is up, add set expiry time stamp to the total seconds
   useEffect(() => {
     if (timeLeft === 0) {
-      // add();
       setTotalSeconds((prev) => prev + expiryTimestamp);
-      // setTotalSecondsToHours(("0" + (Math.floor(totalSeconds / 3600))).slice(-2));
-      // setTotalSecondsToMinutes(("0" +(totalSeconds % 3600) / 60).slice(-2));
     }
   }, [timeLeft]);
-  // }, [count]);
 
   useEffect(() => {
     if (timeLeft === 0) {
       add();
     }
   }, [totalSeconds]);
-  // }, [count]);
-  // }, [timeLeft]);
 
   //Store in the local storage
   function add() {
@@ -117,7 +93,6 @@ export default function App() {
     }
     setCollections(collection);
   }, [totalSeconds]);
-  // }, [count]);
 
   function stop() {
     clearInterval(intervalRef.current);
@@ -166,13 +141,7 @@ export default function App() {
       <Calendar
         onChange={(date) => setDate(date)}
         value={date}
-        // showWeekNumbers={true}
-        // tileContent={({ date, view }) => (
-        //   <div className="custom-date-style">{count}</div>
-        // )}
-        // tileContent={({ activeStartDate, date, view }) => view === 'month' && date.getDate() ===  new Date().getDate()? <p>Today</p> : null}
-        // tileContent = {getTileContent}
-
+        showWeekNumbers={true}
         tileContent={({ activeStartDate, date, view }) => {
           // property is shown a date as 10102023
           for (const property in collections) {
@@ -187,7 +156,7 @@ export default function App() {
                   -2
                 );
                 return (
-                  <div>
+                  <div className="totalHoursOnCalendar">
                     {hours}H {mins}
                   </div>
                 );
