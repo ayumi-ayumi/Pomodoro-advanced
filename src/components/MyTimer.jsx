@@ -5,8 +5,10 @@ export default function MyTimer(props) {
   let timeLeft = props.timeLeft;
   let m = timeLeft / 60;
   let s = timeLeft % 60;
-  let minutes = ("0" + (Math.floor(m))).slice(-2);
-  let seconds = ("0" + s).slice(-2);
+  let timeLeftMinutes = ("0" + (Math.floor(timeLeft / 60))).slice(-2);
+  let timeLeftSeconds = ("0" + timeLeft % 60).slice(-2);
+  
+  let totalSeconds = props.totalSeconds;
 
   // const [timerMins, setTimerMins] = useState()
 
@@ -31,10 +33,11 @@ export default function MyTimer(props) {
         Minutes
       </div>
       <div className="timeLeft">
-       {props.timeLeft ? <span>{minutes}</span> : <span>00</span>}:
-       {props.timeLeft ? <span>{seconds}</span> : <span>00</span>}
+       {timeLeft ? <span>{timeLeftMinutes}</span> : <span>00</span>}:
+       {timeLeft ? <span>{timeLeftSeconds}</span> : <span>00</span>}
       </div>
-      {props.totalSeconds &&<div>{props.totalSeconds}</div> }
+      {totalSeconds &&<div>{totalSeconds}</div> }
+      {totalSeconds &&<div>{props.totalSecondsToHours}H {props.totalSecondsToMinutes}</div> }
       {<div>{props.isActive ? "active": "no active"}</div>}
       {/* {lastElement.map((el)=>(
     <div>count:{el.count}</div>

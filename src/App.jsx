@@ -13,22 +13,21 @@ export default function App() {
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [expiryTimestamp, setExpiryTimestamp] = useState(0);
-  // const [expiryTimestamp, setExpiryTimestamp] = useState();
-  // const [timeLeft, setTimeLeft] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(1);
-  // const [timeLeft, setTimeLeft] = useState(expiryTimestamp);
-  // const [timeLeft, setTimeLeft] = useState(expiryTimestamp * 60);
+  const [timeLeft, setTimeLeft] = useState();
+  // const [timeLeft, setTimeLeft] = useState(1);
   // const [count, setCount] = useState(0);
   const [record, setRecord] = useState();
   const [collections, setCollections] = useState();
-  // const [totalSecondsArr, setTotalSecondsArr] = useState([]);
   const [totalSeconds, setTotalSeconds] = useState(0);
 
+  
   const todayDdMmYyyy =
-    "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
+  "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
   const audio = new Audio(alarm);
-
+  
   let intervalRef = useRef(null);
+  let totalSecondsToHours = Math.floor(totalSeconds / 3600)
+  let totalSecondsToMinutes = ("0" + (totalSeconds % 3600) / 60).slice(-2);
 
   useEffect(() => {
     const totalSecondsDataOnLocalStorage = JSON.parse(
@@ -39,7 +38,7 @@ export default function App() {
       // setCount(countDataOnLocalStorage.count);
     }
   }, []);
- 
+
   useEffect(() => {
     if (record) {
       if (record.totalSeconds) setTotalSeconds(record.totalSeconds);
@@ -54,7 +53,7 @@ export default function App() {
   //     // setCount(countDataOnLocalStorage.count);
   //   }
   // }, []);
- 
+
   // useEffect(() => {
   //   if (record) {
   //     if (record.count) setCount(record.count);
@@ -82,15 +81,17 @@ export default function App() {
   // When time is up, add set expiry time stamp to the total seconds
   useEffect(() => {
     if (timeLeft === 0) {
-    // add();
-    setTotalSeconds((prev) => prev + expiryTimestamp);
+      // add();
+      setTotalSeconds((prev) => prev + expiryTimestamp);
+      // setTotalSecondsToHours(("0" + (Math.floor(totalSeconds / 3600))).slice(-2));
+      // setTotalSecondsToMinutes(("0" +(totalSeconds % 3600) / 60).slice(-2));
     }
   }, [timeLeft]);
   // }, [count]);
 
   useEffect(() => {
     if (timeLeft === 0) {
-    add();
+      add();
     }
   }, [totalSeconds]);
   // }, [count]);
@@ -98,27 +99,14 @@ export default function App() {
 
   //Store in the local storage
   function add() {
-    console.log(totalSeconds)
     const newRecord = {
       id: todayDdMmYyyy,
       recordDate: todayDdMmYyyy,
       totalSeconds: totalSeconds,
     };
     if (totalSeconds > 0) setRecord(newRecord);
-      localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
-    
+    localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
   }
-  // //Store in the local storage
-  // function add() {
-  //   const newRecord = {
-  //     id: todayDdMmYyyy,
-  //     recordDate: todayDdMmYyyy,
-  //     count: count,
-  //   };
-  //   if (count > 0) setRecord(newRecord);
-  //     localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
-    
-  // }
 
   //Make an object of each date and count number {date: count number}
   useEffect(() => {
@@ -130,16 +118,6 @@ export default function App() {
     setCollections(collection);
   }, [totalSeconds]);
   // }, [count]);
-  // //Make an object of each date and count number {date: count number}
-  // useEffect(() => {
-  //   let collection = {};
-  //   for (let i = 0; i < localStorage.length; i++) {
-  //     let key = localStorage.key(i);
-  //     collection[key] = JSON.parse(localStorage.getItem(key)).count;
-  //   }
-  //   setCollections(collection);
-  // }, [totalSeconds]);
-  // // }, [count]);
 
   function stop() {
     clearInterval(intervalRef.current);
@@ -148,8 +126,7 @@ export default function App() {
   }
 
   function start() {
-    if(expiryTimestamp) setIsActive(true);
-    // setTotalSecondsArr([...totalSecondsArr, expiryTimestamp])
+    if (expiryTimestamp) setIsActive(true);
   }
 
   function reset() {
@@ -160,16 +137,14 @@ export default function App() {
   }
 
   function getFormatDate(date) {
-    return `${(date.getDate())}${(date.getMonth() + 1)}${date.getFullYear()}`;
+    return `${date.getDate()}${date.getMonth() + 1}${date.getFullYear()}`;
   }
 
   function handleChange(event) {
-    setExpiryTimestamp(event.target.value * 60);
-    // setExpiryTimestamp((prev) => parseInt(event.target.value));
-    // setTimeLeft(expiryTimestamp * 60);
-    setTimeLeft((prev) => event.target.value); // as seconds
-    // setTimeLeft((prev) => event.target.value * 60); //本番用
-    // setTotalSecondsArr([...event.target.value])
+    // setExpiryTimestamp(event.target.value * 1500);//demo
+    setExpiryTimestamp(event.target.value * 60); //本番用
+    // setTimeLeft((prev) => event.target.value); // as seconds, demo
+    setTimeLeft((prev) => event.target.value * 60); //本番用
   }
 
   return (
@@ -182,6 +157,8 @@ export default function App() {
         record={record}
         isActive={isActive}
         totalSeconds={totalSeconds}
+        totalSecondsToHours={totalSecondsToHours}
+        totalSecondsToMinutes={totalSecondsToMinutes}
         expiryTimestamp={expiryTimestamp}
         handleChange={handleChange}
         // collection={collection}
@@ -197,7 +174,7 @@ export default function App() {
         // tileContent = {getTileContent}
 
         tileContent={({ activeStartDate, date, view }) => {
-          // property is date as 10102023
+          // property is shown a date as 10102023
           for (const property in collections) {
             if (collections.hasOwnProperty(property)) {
               if (
@@ -205,7 +182,15 @@ export default function App() {
                 record &&
                 getFormatDate(date) === property
               ) {
-                return <div>{collections[property]}</div>;
+                let hours = Math.floor(collections[property] / 3600);
+                let mins = ("0" + (collections[property] % 3600) / 60).slice(
+                  -2
+                );
+                return (
+                  <div>
+                    {hours}H {mins}
+                  </div>
+                );
               }
               <p>error</p>;
             }
