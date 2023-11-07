@@ -1,2 +1,0 @@
--Error: Failed to load resource: the server responded with a status of 404 (Not Found)"
-Solution => add line <link rel="shortcut icon" href="#"> on header section
