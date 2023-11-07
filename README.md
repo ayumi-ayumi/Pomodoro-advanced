@@ -1,5 +1,5 @@
-# Pomodoro timer 
-[Demo](https://ayumi-ayumi.github.io/Pomodoro-advanced/)
+# Timer-record 
+[Demo](https://ayumi-ayumi.github.io/Timer-record )
 
 ### About
 This is an useful timer for someone who wants to know how much you study or work.
