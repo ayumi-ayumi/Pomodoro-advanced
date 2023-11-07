@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-myNote.txt
+note.txt
 dist
 .eslintrc.cjs
+debug.log
