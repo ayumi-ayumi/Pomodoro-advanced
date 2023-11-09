@@ -10,7 +10,7 @@ export default function MyTimer(props) {
   let totalSeconds = props.totalSeconds;
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="myTimer">
       <div className="settingTimer">
         <input
           type="number"
@@ -26,12 +26,12 @@ export default function MyTimer(props) {
        {timeLeft ? <span>{timeLeftSeconds}</span> : <span>00</span>}
       </div>
       {/* {totalSeconds &&<div>{totalSeconds}</div> } */}
-      {totalSeconds &&<div className="totalHours">{props.totalSecondsToHours}H {props.totalSecondsToMinutes}</div> }
+      {totalSeconds > 0 &&<div className="totalHours">{props.totalSecondsToHours}H {props.totalSecondsToMinutes}</div> }
       {/* {<div>{props.isActive ? "active": "no active"}</div>} */}
-      <div>
-        <button className="timerButtons" onClick={props.start}>START</button>
-        <button className="timerButtons" onClick={props.stop}>STOP</button>
-        <button className="timerButtons" onClick={props.reset}>RESET</button>
+      <div className="timerButtons">
+        <button onClick={props.start}>START</button>
+        <button onClick={props.stop}>STOP</button>
+        <button onClick={props.reset}>RESET</button>
       </div>
     </div>
   );

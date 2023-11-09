@@ -1,3 +1,16 @@
+.myTimer {
+  text-align: center;
+  width: 280px;
+  height: 220px;
+  /* border: 1px solid grey; */
+  margin: 10px auto;
+  background-color: #caf6ff;
+  position: relative;
+  border-radius: 4%;
+  box-shadow: 1px 4px 60px 0 rgba(14, 42,90, 0.55);
+  /* box-shadow: inset 0px 0px 10px 0px rgba(14, 42,90, 0.55); */
+}
+
 .settingTimer {
   /* font-size: 60px; */
   line-height: 35px;
@@ -22,7 +35,13 @@ input {
   font-size: 20px;
 }
 
+
 .timerButtons {
+  position: absolute;
+  top: 159px;
+  left: 16px;
+}
+.timerButtons button {
   padding: 5px 10px;
 }
 

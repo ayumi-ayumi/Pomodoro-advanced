@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/App.css";
 import Calendar from "react-calendar";
 import MyTimer from "./components/MyTimer";
-import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/node_modules/react-calendar/dist/Calendar.css";
-// import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/globals.css";
+import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/Calendar.css";
+// import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/node_modules/react-calendar/dist/Calendar.css";
 import alarm from "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/alarm.mp3";
 import * as React from "react";
 
 export default function App() {
   // const [value, setValue] = useState()
-  // const [date, setDate] = useState(new Date(2023, 8, 10)); //demo
+  // const [date, setDate] = useState(new Date(2023, 10, 3)); //demo
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [expiryTimestamp, setExpiryTimestamp] = useState(0);
@@ -81,17 +81,18 @@ export default function App() {
       totalSeconds: totalSeconds,
     };
     if (totalSeconds > 0) setRecord(newRecord);
-    localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord));
+    localStorage.setItem(todayDdMmYyyy, JSON.stringify(newRecord)); // using useEffect is also worked
   }
 
   //Make an object of each date and count number {date: count number}
   useEffect(() => {
-    let collection = {};
+    let collectionArr = {};
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
-      collection[key] = JSON.parse(localStorage.getItem(key)).totalSeconds;
+      collectionArr[key] = JSON.parse(localStorage.getItem(key)).totalSeconds;
     }
-    setCollections(collection);
+    setCollections(collectionArr);
+  // },[]);
   }, [totalSeconds]);
 
   function stop() {
@@ -118,8 +119,8 @@ export default function App() {
   function handleChange(event) {
     // setExpiryTimestamp(event.target.value * 1500);//demo
     setExpiryTimestamp(event.target.value * 60); //本番用
-    // setTimeLeft((prev) => event.target.value); // as seconds, demo
-    setTimeLeft((prev) => event.target.value * 60); //本番用
+    setTimeLeft((prev) => event.target.value); // as seconds, demo
+    // setTimeLeft((prev) => event.target.value * 60); //本番用
   }
 
   return (
@@ -148,13 +149,11 @@ export default function App() {
             if (collections.hasOwnProperty(property)) {
               if (
                 view === "month" &&
-                record &&
+                // record &&
                 getFormatDate(date) === property
               ) {
                 let hours = Math.floor(collections[property] / 3600);
-                let mins = ("0" + (collections[property] % 3600) / 60).slice(
-                  -2
-                );
+                let mins = ("0" + (collections[property] % 3600) / 60).slice(-2);
                 return (
                   <div className="totalHoursOnCalendar">
                     {hours}H {mins}
