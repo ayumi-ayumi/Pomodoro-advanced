@@ -156,7 +156,7 @@ export default function App() {
                 let mins = ("0" + (collections[property] % 3600) / 60).slice(-2);
                 return (
                   <div className="totalHoursOnCalendar">
-                    {hours}H {mins}
+                    {hours} hr {mins} min
                   </div>
                 );
               }

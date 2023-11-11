@@ -26,7 +26,7 @@ export default function MyTimer(props) {
        {timeLeft ? <span>{timeLeftSeconds}</span> : <span>00</span>}
       </div>
       {/* {totalSeconds &&<div>{totalSeconds}</div> } */}
-      {totalSeconds > 0 &&<div className="totalHours">{props.totalSecondsToHours}H {props.totalSecondsToMinutes}</div> }
+      {totalSeconds > 0 &&<div className="totalHours">{props.totalSecondsToHours} hr {props.totalSecondsToMinutes} min</div> }
       {/* {<div>{props.isActive ? "active": "no active"}</div>} */}
       <div className="timerButtons">
         <button onClick={props.start}>START</button>

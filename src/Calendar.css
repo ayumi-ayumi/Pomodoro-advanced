@@ -6,7 +6,7 @@
   border: 1px solid #a0a096;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
-  max-width: 700px;
+  max-width: 740px;
   margin: 0 auto;
   border-radius: 8px;
   box-shadow: 1px 4px 60px 0 rgba(14, 42,90, 0.55);
@@ -173,9 +173,11 @@
 }
 
 .totalHoursOnCalendar {
-  font-weight: 900;
+  font-weight: 300;
   background-color: grey;
   margin-top: 10px;
+  box-shadow: 2px 2px 6px 1px black;
+  color: #fff;
 }
 
 button abbr {

@@ -39,9 +39,17 @@ input {
 .timerButtons {
   position: absolute;
   top: 159px;
-  left: 16px;
-}
-.timerButtons button {
-  padding: 5px 10px;
+  left: 4%;
 }
 
+.timerButtons button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: hsla(0,0%,100%,0%);
+  font-weight: bold;
+}
+
+.timerButtons button:hover {
+  box-shadow: 0px 2px 40px 0px rgba(0,0,0,.3);
+  transform: translateY(-3px);
+}
