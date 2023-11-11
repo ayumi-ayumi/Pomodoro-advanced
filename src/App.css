@@ -23,9 +23,7 @@ body {
   width: 80%;
 }
 
-
-
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid black;
   padding: 0.6em 1.2em;
@@ -59,4 +57,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

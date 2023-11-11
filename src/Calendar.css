@@ -9,8 +9,7 @@
   max-width: 740px;
   margin: 0 auto;
   border-radius: 8px;
-  box-shadow: 1px 4px 60px 0 rgba(14, 42,90, 0.55);
-  /* box-shadow: inset 0px 0px 10px 0px rgba(14, 42,90, 0.55); */
+  box-shadow: 1px 4px 13px 0 rgba(14, 42,90, 0.55);
 
 
 }
@@ -86,7 +85,7 @@
   align-items: center;
   justify-content: center;
   font-size: 0.9em;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .react-calendar__month-view__days__day--weekend {
@@ -106,7 +105,7 @@
 .react-calendar__tile {
   /* max-width: 110px; */
   max-width: 100%;
-  padding: 10px 6.6667px;
+  /* padding: 10px 6.6667px; */
   background: none;
   text-align: center;
   line-height: 16px;
@@ -175,9 +174,10 @@
 .totalHoursOnCalendar {
   font-weight: 300;
   background-color: grey;
-  margin-top: 10px;
+  margin-top: 28px;
   box-shadow: 2px 2px 6px 1px black;
   color: #fff;
+  width: 100%;
 }
 
 button abbr {
@@ -189,5 +189,41 @@ button abbr {
 
 .react-calendar__month-view__weekNumbers {
   display: block !important;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid black;
+  /* padding: 0.6em 1.2em; */
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin: 5px;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+  }
+
+  a:hover {
+    color: #8ecad7;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
 }
 
