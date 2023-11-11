@@ -9,7 +9,7 @@ import * as React from "react";
 
 export default function App() {
   // const [value, setValue] = useState()
-  // const [date, setDate] = useState(new Date(2023, 10, 3)); //demo
+  // const [date, setDate] = useState(new Date(2023, 10, 9)); //demo
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [expiryTimestamp, setExpiryTimestamp] = useState(0);
@@ -119,8 +119,8 @@ export default function App() {
   function handleChange(event) {
     // setExpiryTimestamp(event.target.value * 1500);//demo
     setExpiryTimestamp(event.target.value * 60); //本番用
-    setTimeLeft((prev) => event.target.value); // as seconds, demo
-    // setTimeLeft((prev) => event.target.value * 60); //本番用
+    // setTimeLeft((prev) => event.target.value); // as seconds, demo
+    setTimeLeft((prev) => event.target.value * 60); //本番用
   }
 
   return (

@@ -56,7 +56,6 @@
 .react-calendar__navigation button {
   min-width: 44px;
   background: none;
-
   padding: 0;
 }
 
@@ -76,16 +75,15 @@
   font-size: 0.75em;
 }
 
-.react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em;
+.react-calendar__month-view__days button {
+  margin: 2px;
+  flex: 0 0 13.99% !important;
 }
 
-.react-calendar__tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9em;
-  font-weight: 500;
+.react-calendar__month-view__weekdays__weekday {
+  padding: 0.5em;
+  margin: 1px !important;
+  flex: 0 0 14% !important;
 }
 
 .react-calendar__month-view__days__day--weekend {
@@ -103,6 +101,11 @@
 }
 
 .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
+  font-weight: 500;
   /* max-width: 110px; */
   max-width: 100%;
   /* padding: 10px 6.6667px; */
@@ -111,8 +114,10 @@
   line-height: 16px;
   height: 60px;
   position: relative;
-  border-radius: unset;
+  border-radius: 4px;
   border: 1px solid rgb(166, 166, 166);
+  /* flex: 0 0 13.99% !important; */
+  /* margin: 1px !important; */
 }
 
 .react-calendar__tile:disabled {
@@ -188,9 +193,16 @@ button abbr {
 }
 
 .react-calendar__month-view__weekNumbers {
+  /* display: block ; */
   display: block !important;
+  flex-basis: calc(6.5%)!important;
 }
 
+.react-calendar__month-view__weekNumbers .react-calendar__tile{
+  margin: 2px;
+  border: none;
+  text-decoration: underline dotted;
+}
 button {
   border-radius: 8px;
   border: 1px solid black;
@@ -201,7 +213,8 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin: 5px;
+  /* margin: 1px !important; */
+  /* margin: 5px; */
 }
 
 button:hover {

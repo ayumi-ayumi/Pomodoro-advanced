@@ -23,6 +23,7 @@ input {
   margin: 5px;
   font-size: 35px;
   text-align: center;
+  /* outline: 1px dotted rgb(238, 0, 255); */
 }
 
 .timeLeft {
@@ -46,7 +47,8 @@ input {
   padding: 5px 10px;
   border-radius: 4px;
   background: hsla(0,0%,100%,0%);
-  font-weight: bold;
+  font-weight: 700;
+  margin: 5px;
 }
 
 .timerButtons button:hover {
