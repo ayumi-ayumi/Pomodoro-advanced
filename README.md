@@ -1,5 +1,6 @@
 # Timer-record 
 [Demo](https://ayumi-ayumi.github.io/Timer-record )
+![myTimer-demo](https://github.com/ayumi-ayumi/Timer-record/assets/69543331/56c47182-9ce2-4e3f-922c-bbab1199117e)
 
 ### About
 This is an useful timer for someone who wants to know how much you study or work.
