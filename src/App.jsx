@@ -3,15 +3,13 @@ import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced
 import Calendar from "react-calendar";
 import MyTimer from "./components/MyTimer";
 import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/Calendar.css";
-// import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/node_modules/react-calendar/dist/Calendar.css";
 import alarm from "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/alarm.mp3";
 import * as React from "react";
 
-const timerWorker = new Worker('/Timer-record/src/worker.jsx');
+const timerWorker = new Worker("/Timer-record/src/worker.jsx");
 const audio = new Audio(alarm);
 
 export default function App() {
-  // const [value, setValue] = useState()
   // const [date, setDate] = useState(new Date(2023, 10, 9)); //demo
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
@@ -20,14 +18,11 @@ export default function App() {
   const [record, setRecord] = useState();
   const [collections, setCollections] = useState();
   const [totalSeconds, setTotalSeconds] = useState(0);
-  
+
   const todayDdMmYyyy =
-  "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
-  // const audio = new Audio(alarm);
-  // const [audio, setAudio] = useState( new Audio(alarm) )
-  
-  let intervalRef = useRef(null);
-  let totalSecondsToHours = Math.floor(totalSeconds / 3600)
+    "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
+
+  let totalSecondsToHours = Math.floor(totalSeconds / 3600);
   let totalSecondsToMinutes = ("0" + (totalSeconds % 3600) / 60).slice(-2);
 
   useEffect(() => {
@@ -45,44 +40,22 @@ export default function App() {
     }
   }, [record]);
 
-
   useEffect(() => {
     timerWorker.onmessage = (e) => {
-      setTimeLeft(e.data.time)
+      setTimeLeft(e.data.time);
     };
-  },[])
+  }, []);
 
   useEffect(() => {
     if (timeLeft === 0) {
       setIsActive(false);
-      timerWorker.postMessage({ isActive: false, expiryTimestamp: 0});
-      // audio.play();
+      timerWorker.postMessage({ isActive: false, expiryTimestamp: 0 });
     }
-  },[timeLeft]);
-  // useEffect(() => {
-  //   if (isActive) {
-  //     intervalRef.current = setInterval(() => {
-  //       setTimeLeft((prev) => {
-  //         if (prev === 0) {
-  //           audio.play();
-  //           clearInterval(intervalRef.current);
-  //           return 0;
-  //         }
-  //         return prev - 1;
-  //       });
-  //     }, 1000);
-  //   }
-  //   return () => {
-  //     clearInterval(intervalRef.current);
-  //   };
-  // });
-
+  }, [timeLeft]);
 
   // When time is up, add the expiry time stamp to the total seconds
   useEffect(() => {
     if (timeLeft === 0) {
-      // audio.play();
-
       setTotalSeconds((prev) => prev + expiryTimestamp);
     }
   }, [timeLeft]);
@@ -90,7 +63,6 @@ export default function App() {
   useEffect(() => {
     if (timeLeft === 0) {
       audio.play();
-
       add();
     }
   }, [totalSeconds]);
@@ -114,31 +86,30 @@ export default function App() {
       collectionArr[key] = JSON.parse(localStorage.getItem(key)).totalSeconds;
     }
     setCollections(collectionArr);
-  // },[]);
   }, [totalSeconds]);
 
   function stop() {
-    // clearInterval(intervalRef.current);
     setIsActive(false);
-    timerWorker.postMessage({ isActive: false, expiryTimestamp: timeLeft});
+    timerWorker.postMessage({ isActive: false, expiryTimestamp: timeLeft });
     audio.pause();
   }
 
   function start() {
     if (expiryTimestamp) {
       setIsActive(true);
-      if(expiryTimestamp !== timeLeft) {
+      if (expiryTimestamp !== timeLeft) {
         timerWorker.postMessage({ isActive: true, expiryTimestamp: timeLeft });
       } else {
-        
-        timerWorker.postMessage({ isActive: true, expiryTimestamp: expiryTimestamp });
+        timerWorker.postMessage({
+          isActive: true,
+          expiryTimestamp: expiryTimestamp,
+        });
       }
     }
   }
 
   function reset() {
     setTimeLeft(expiryTimestamp);
-    clearInterval(intervalRef.current);
     setIsActive(false);
     audio.pause();
   }
@@ -148,12 +119,15 @@ export default function App() {
   }
 
   function handleChange(event) {
-    setExpiryTimestamp(event.target.value * 1500);//demo
-    // setExpiryTimestamp(event.target.value * 60); //本番用
-    timerWorker.postMessage({ isActive: false, expiryTimestamp: event.target.value * 1500 });
-    
-    setTimeLeft((prev) => event.target.value); // as seconds, demo
-    // setTimeLeft((prev) => event.target.value * 60); //本番用
+    // setExpiryTimestamp(event.target.value * 1500);//demo
+    setExpiryTimestamp(event.target.value * 60); //本番用
+    timerWorker.postMessage({
+      isActive: false,
+      expiryTimestamp: event.target.value * 60,
+    });
+
+    // setTimeLeft((prev) => event.target.value); // as seconds, demo
+    setTimeLeft((prev) => event.target.value * 60); //本番用
   }
 
   return (
@@ -170,7 +144,6 @@ export default function App() {
         totalSecondsToMinutes={totalSecondsToMinutes}
         expiryTimestamp={expiryTimestamp}
         handleChange={handleChange}
-        // collection={collection}
       />
       <Calendar
         onChange={(date) => setDate(date)}
@@ -186,7 +159,9 @@ export default function App() {
                 getFormatDate(date) === property
               ) {
                 let hours = Math.floor(collections[property] / 3600);
-                let mins = ("0" + (collections[property] % 3600) / 60).slice(-2);
+                let mins = ("0" + (collections[property] % 3600) / 60).slice(
+                  -2
+                );
                 return (
                   <div className="totalHoursOnCalendar">
                     {hours} hr {mins} min
@@ -198,7 +173,6 @@ export default function App() {
           }
         }}
       />
-      {/* <div>{webWorkerTime}</div> */}
     </>
   );
 }
@@ -221,11 +195,11 @@ export default function App() {
 //   const [record, setRecord] = useState();
 //   const [collections, setCollections] = useState();
 //   const [totalSeconds, setTotalSeconds] = useState(0);
-  
+
 //   const todayDdMmYyyy =
 //   "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
 //   const audio = new Audio(alarm);
-  
+
 //   let intervalRef = useRef(null);
 //   let totalSecondsToHours = Math.floor(totalSeconds / 3600)
 //   let totalSecondsToMinutes = ("0" + (totalSeconds % 3600) / 60).slice(-2);
@@ -262,7 +236,6 @@ export default function App() {
 //       clearInterval(intervalRef.current);
 //     };
 //   });
-
 
 //   // When time is up, add set expiry time stamp to the total seconds
 //   useEffect(() => {
