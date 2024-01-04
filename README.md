@@ -6,7 +6,7 @@
 This is an useful timer for someone who wants to know how much you study or work in a day.
 
 ### How to use
-1. Set a timer by typing how many minutes you want to set or clicking up and down spinner buttons (step is 5 and max is 60).
+1. Set a timer by typing how many minutes you want to set or clicking up or down spinner buttons (step is 5 and max is 60).
 
 2. When the timer runs out, it notices you by an alarm sound. 🔔
 
