@@ -2,12 +2,16 @@ import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced
 
 export default function MyTimer(props) {
   let timeLeft = props.timeLeft;
-  let m = timeLeft / 60;
-  let s = timeLeft % 60;
+  // let m = timeLeft / 60;
+  // let s = timeLeft % 60;
   let timeLeftMinutes = ("0" + (Math.floor(timeLeft / 60))).slice(-2);
   let timeLeftSeconds = ("0" + timeLeft % 60).slice(-2);
   
   let totalSeconds = props.totalSeconds;
+
+  if(timeLeft || timeLeft === 0){
+    document.title = `${timeLeftMinutes} : ${timeLeftSeconds}`
+  }
 
   return (
     <div className="myTimer">

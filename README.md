@@ -3,11 +3,15 @@
 ![myTimer-demo](https://github.com/ayumi-ayumi/Timer-record/assets/69543331/56c47182-9ce2-4e3f-922c-bbab1199117e)
 
 ### About
-This is an useful timer for someone who wants to know how much you study or work.
+This is an useful timer for someone who wants to know how much you study or work in a day.
 
-You set a timer and it notice you as ringing when time is up.
+You set a timer and it notices you as ringing when time is up.
 
-Time is added to the today's total working time and you can easily see how many hours/minutes you have done.
+Done time will be added to the today's total working time and you can easily see how many hours/minutes you have done in a day.
+
+### Update
+I noticed that the timer is sometimes not working on the background, especially SetIntervel() does not work on the background. 
+I use Web Worker API to fix this issue.
 
 ### Built With
 * ![React image](https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black)
