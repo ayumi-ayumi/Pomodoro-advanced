@@ -8,9 +8,15 @@ This is an useful timer for someone who wants to know how much you study or work
 ### How to use
 1. Set a timer by typing how many minutes you want to set or clicking up and down spinner buttons (step is 5 and max is 60).
 
+<<<<<<< HEAD
 2. When the timer runs out, it notices you by an alarm sound. :bell:
 
 3. The run up time duration will be added to the today's total and you can see how many hours/minutes you have done in a day on the calendar. :date:
+=======
+2. When the timer runs out, it notices you by an alarm sound. 🔔
+
+3. The run up time duration will be added to the today's total and you can see how many hours/minutes you have done in a day on the calendar.	📅
+>>>>>>> 382409cc762fa4d56d55563d84e277ba5fdb9ab3
   
 4. The reset button makes the timer set again.
 
