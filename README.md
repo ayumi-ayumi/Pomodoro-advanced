@@ -1,5 +1,5 @@
 # Timer-record :stopwatch:
-[Click here to see the demo](https://ayumi-ayumi.github.io/Timer-record )
+[Click here to see the demo](https://ayumi-ayumi.github.io/pomodoro-timer-record/)
 ![myTimer-demo](https://github.com/ayumi-ayumi/Timer-record/assets/69543331/56c47182-9ce2-4e3f-922c-bbab1199117e)
 
 ### About
