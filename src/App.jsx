@@ -6,7 +6,8 @@ import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced
 import alarm from "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/alarm.mp3";
 import * as React from "react";
 
-const timerWorker = new Worker("/Timer-record/src/worker.jsx");
+const timerWorker = new Worker("src/worker.jsx");
+// const timerWorker = new Worker("/Timer-record/src/worker.jsx");
 const audio = new Audio(alarm);
 
 export default function App() {
