@@ -1,13 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/App.css";
 import Calendar from "react-calendar";
 import MyTimer from "./components/MyTimer";
 import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/Calendar.css";
-import alarm from "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/alarm.mp3";
+import alarm from "../assets/alarm.mp3";
 import * as React from "react";
 
-const timerWorker = new Worker("src/worker.jsx");
+
+const timerWorker = new Worker("/pomodoro-timer-record/src/worker.jsx");
+// const timerWorker = new Worker("/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/worker.jsx");
+// const timerWorker = new Worker("./worker.jsx");
 // const timerWorker = new Worker("/Timer-record/src/worker.jsx");
+console.log(timerWorker)
 const audio = new Audio(alarm);
 
 export default function App() {
