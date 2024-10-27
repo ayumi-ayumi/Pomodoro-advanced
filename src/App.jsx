@@ -5,7 +5,9 @@ import MyTimer from "./components/MyTimer";
 import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/Calendar.css";
 import alarm from "../assets/alarm.mp3";
 import * as React from "react";
+import Worker from './worker?worker'; 
 
+const timerWorker = new Worker();
 // const timerWorker = new Worker("/pomodoro-timer-record/src/worker.jsx");
 // console.log(timerWorker)
 const audio = new Audio(alarm);
@@ -21,24 +23,6 @@ export default function App() {
   const [totalSeconds, setTotalSeconds] = useState(0);
   // const [timerWorker, setTimerWorker] = useState();
   // const timerWorker = useRef(null);
-
-  const crossOriginScriptUrl =
-    "https://ayumi-ayumi.github.io/pomodoro-timer-record/src/worker.jsx";
-
-  // Workerオブジェクトを生成
-  const workerUrl = getWorkerURL(crossOriginScriptUrl);
-  const timerWorker = new Worker(workerUrl);
-  // オブジェクトURLの解放
-  URL.revokeObjectURL(workerUrl);
-
-  function getWorkerURL(url) {
-    const content = `importScripts("${url}");`;
-    return URL.createObjectURL(
-      new Blob([content], {
-        type: "text/javascript",
-      })
-    );
-  }
 
   const todayDdMmYyyy =
     "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
