@@ -20,7 +20,25 @@ export default function App() {
   const [collections, setCollections] = useState();
   const [totalSeconds, setTotalSeconds] = useState(0);
   // const [timerWorker, setTimerWorker] = useState();
-  const workerRef = useRef(null);
+  // const timerWorker = useRef(null);
+
+  const crossOriginScriptUrl =
+    "https://ayumi-ayumi.github.io/pomodoro-timer-record/src/worker.jsx";
+
+  // Workerオブジェクトを生成
+  const workerUrl = getWorkerURL(crossOriginScriptUrl);
+  const timerWorker = new Worker(workerUrl);
+  // オブジェクトURLの解放
+  URL.revokeObjectURL(workerUrl);
+
+  function getWorkerURL(url) {
+    const content = `importScripts("${url}");`;
+    return URL.createObjectURL(
+      new Blob([content], {
+        type: "text/javascript",
+      })
+    );
+  }
 
   const todayDdMmYyyy =
     "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
@@ -28,17 +46,18 @@ export default function App() {
   let totalSecondsToHours = Math.floor(totalSeconds / 3600);
   let totalSecondsToMinutes = ("0" + (totalSeconds % 3600) / 60).slice(-2);
 
-  useEffect(() => {
-    // const timerWorker = new Worker("/pomodoro-timer-record/src/worker.jsx");
-    // setTimerWorker(new Worker("/pomodoro-timer-record/src/worker.jsx"))
-    workerRef.current = new Worker("/pomodoro-timer-record/src/worker.jsx")
-    workerRef.current.onmessage = (e) => {
-      setTimeLeft(e.data.time);
-    };
-    return () => {
-      workerRef.current.terminate(); // Clean up on component unmount
-    }
-  }, []);
+  // useEffect(() => {
+  //   // const timerWorker = new Worker("/pomodoro-timer-record/src/worker.jsx");
+  //   // setTimerWorker(new Worker("/pomodoro-timer-record/src/worker.jsx"))
+  //   timerWorker.current = new Worker("/pomodoro-timer-record/src/worker.jsx")
+  //   console.log(timerWorker.current)
+  //   timerWorker.current.onmessage = (e) => {
+  //     setTimeLeft(e.data.time);
+  //   };
+  //   return () => {
+  //     timerWorker.current.terminate(); // Clean up on component unmount
+  //   }
+  // }, []);
 
   useEffect(() => {
     const totalSecondsDataOnLocalStorage = JSON.parse(
@@ -55,16 +74,16 @@ export default function App() {
     }
   }, [record]);
 
-  // useEffect(() => {
-  //   workerRef.onmessage = (e) => {
-  //     setTimeLeft(e.data.time);
-  //   };
-  // }, [workerRef]);
+  useEffect(() => {
+    timerWorker.onmessage = (e) => {
+      setTimeLeft(e.data.time);
+    };
+  }, []);
 
   useEffect(() => {
     if (timeLeft === 0) {
       setIsActive(false);
-      workerRef.current.postMessage({ isActive: false, expiryTimestamp: 0 });
+      timerWorker.postMessage({ isActive: false, expiryTimestamp: 0 });
     }
   }, [timeLeft]);
 
@@ -105,7 +124,7 @@ export default function App() {
 
   function stop() {
     setIsActive(false);
-    workerRef.current.postMessage({ isActive: false, expiryTimestamp: timeLeft });
+    timerWorker.postMessage({ isActive: false, expiryTimestamp: timeLeft });
     audio.pause();
   }
 
@@ -113,9 +132,9 @@ export default function App() {
     if (expiryTimestamp) {
       setIsActive(true);
       if (expiryTimestamp !== timeLeft) {
-        workerRef.current.postMessage({ isActive: true, expiryTimestamp: timeLeft });
+        timerWorker.postMessage({ isActive: true, expiryTimestamp: timeLeft });
       } else {
-        workerRef.current.postMessage({
+        timerWorker.postMessage({
           isActive: true,
           expiryTimestamp: expiryTimestamp,
         });
@@ -136,7 +155,7 @@ export default function App() {
   function handleChange(event) {
     // setExpiryTimestamp(event.target.value * 1500);//demo
     setExpiryTimestamp(event.target.value * 60); //本番用
-    workerRef.current.postMessage({
+    timerWorker.postMessage({
       isActive: false,
       expiryTimestamp: event.target.value * 60,
     });
