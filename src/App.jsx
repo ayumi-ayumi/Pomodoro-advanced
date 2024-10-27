@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "/Users/Ayumi/Desktop/SelfStudy/React/pomodoro-advanced/pomodoro-advanced/src/App.css";
 import Calendar from "react-calendar";
 import MyTimer from "./components/MyTimer";
@@ -8,8 +8,6 @@ import * as React from "react";
 import Worker from './worker?worker'; 
 
 const timerWorker = new Worker();
-// const timerWorker = new Worker("/pomodoro-timer-record/src/worker.jsx");
-// console.log(timerWorker)
 const audio = new Audio(alarm);
 
 export default function App() {
@@ -21,27 +19,12 @@ export default function App() {
   const [record, setRecord] = useState();
   const [collections, setCollections] = useState();
   const [totalSeconds, setTotalSeconds] = useState(0);
-  // const [timerWorker, setTimerWorker] = useState();
-  // const timerWorker = useRef(null);
 
   const todayDdMmYyyy =
     "" + date.getDate() + (date.getMonth() + 1) + date.getFullYear();
 
   let totalSecondsToHours = Math.floor(totalSeconds / 3600);
   let totalSecondsToMinutes = ("0" + (totalSeconds % 3600) / 60).slice(-2);
-
-  // useEffect(() => {
-  //   // const timerWorker = new Worker("/pomodoro-timer-record/src/worker.jsx");
-  //   // setTimerWorker(new Worker("/pomodoro-timer-record/src/worker.jsx"))
-  //   timerWorker.current = new Worker("/pomodoro-timer-record/src/worker.jsx")
-  //   console.log(timerWorker.current)
-  //   timerWorker.current.onmessage = (e) => {
-  //     setTimeLeft(e.data.time);
-  //   };
-  //   return () => {
-  //     timerWorker.current.terminate(); // Clean up on component unmount
-  //   }
-  // }, []);
 
   useEffect(() => {
     const totalSecondsDataOnLocalStorage = JSON.parse(
@@ -138,14 +121,14 @@ export default function App() {
 
   function handleChange(event) {
     // setExpiryTimestamp(event.target.value * 1500);//demo
-    setExpiryTimestamp(event.target.value * 60); //本番用
+    setExpiryTimestamp(event.target.value * 60); 
     timerWorker.postMessage({
       isActive: false,
       expiryTimestamp: event.target.value * 60,
     });
 
     // setTimeLeft((prev) => event.target.value); // as seconds, demo
-    setTimeLeft((prev) => event.target.value * 60); //本番用
+    setTimeLeft((prev) => event.target.value * 60); 
   }
 
   return (

@@ -15,10 +15,11 @@ This is an useful timer for someone who wants to know how much you study or work
 4. The reset button makes the timer set again.
 
 ### Update
-I noticed that the timer is sometimes not working on the background, especially SetIntervel() does not work on the background. 
+I noticed that the timer is sometimes not working on the background, especially SetIntervel() does not work on the background.  
 I use Web Worker API to fix this issue.
 
 ### Built With
 * ![React image](https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black)
 * ![vite image](https://img.shields.io/badge/Vite-646CFF.svg?style=for-the-badge&logo=Vite&logoColor=white)
 * ![npm image](https://img.shields.io/badge/npm-CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)https://www.npmjs.com/package/react-calendar
+* Web Worker API
